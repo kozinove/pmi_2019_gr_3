@@ -40,12 +40,12 @@ int main() {
 	Polinom P(res);
 	Polinom P1(res1);
 
-	P = P + P1;
-	CList List(P.getL());
-	List.showList();
+	//P = P + P1;
+	//CList List(P.getL());
+	//List.showList();
 
-	//int R = P.CalculPol(2, 2, 2);
-	//cout << R;
+	 int R = P.CalculPol(2, 2, 2);
+	cout << R;
 
 	return 0;
 
