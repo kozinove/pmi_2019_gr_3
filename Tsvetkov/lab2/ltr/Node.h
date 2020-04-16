@@ -1,8 +1,10 @@
 #pragma once
+#include <string>
 #include <iostream>
+using namespace std;
 struct Node {
-	int key;
+	string key;
 	Node* l;
 	Node* r;
-	Node(int _key = 0, Node* _l = NULL, Node* _r = NULL) : key(_key), l(_l), r(_r) {}
+	Node(string _key = "", Node* _l = NULL, Node* _r = NULL) : key(_key), l(_l), r(_r) {}
 };
