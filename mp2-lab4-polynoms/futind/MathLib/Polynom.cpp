@@ -110,7 +110,7 @@ PolynomCList& PolynomCList::operator=(const PolynomCList &Pn)
 
 PolynomCList PolynomCList::operator+(const PolynomCList &Pn)
 {
-	Monom *temp = head;
+	/*Monom *temp = head;
 	PolynomCList *res = new PolynomCList;
 	while (temp->next != head) {
 		temp = temp->next;
@@ -120,6 +120,33 @@ PolynomCList PolynomCList::operator+(const PolynomCList &Pn)
 	while (temp->next != Pn.head) {
 		temp = temp->next;
 		res->addSorted(temp->Coef, temp->Deg);
+	}
+	return *res;*/
+	Monom *temp1 = head->next;
+	Monom *temp2 = Pn.head->next;
+	PolynomCList *res = new PolynomCList;
+	while (temp1 != head && temp2 != Pn.head) {
+		if (temp1->Deg < temp2->Deg) {
+			res->add(temp1->Coef, temp1->Deg);
+			temp1 = temp1->next;
+		}
+		else if (temp1->Deg == temp2->Deg) {
+			res->add(temp1->Coef + temp2->Coef, temp1->Deg);
+			temp1 = temp1->next;
+			temp2 = temp2->next;
+		}
+		else {
+			res->add(temp2->Coef, temp2->Deg);
+			temp2 = temp2->next;
+		}
+	}
+	while (temp1 != head) {
+		res->add(temp1->Coef, temp1->Deg);
+		temp1 = temp1->next;
+	}
+	while (temp2 != Pn.head) {
+		res->add(temp2->Coef, temp2->Deg);
+		temp2 = temp2->next;
 	}
 	return *res;
 }
