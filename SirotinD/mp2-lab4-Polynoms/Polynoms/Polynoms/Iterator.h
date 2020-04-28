@@ -1,11 +1,7 @@
 #pragma once
+#include "Monom.h"
 
 
-struct Monom {
-	double Coef;
-	double Deg;
-	Monom *next;
-};
 
 
 class Iterator {
