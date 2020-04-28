@@ -7,7 +7,10 @@ static int g_p = 0;
 PolynomCList::PolynomCList()
 {
 	head = new Monom;
+	last = new Monom;
 	head->next = head;
+	last->next = head;
+	last = head;
 }
 
 void PolynomCList::maxgp(const std::string &str)
@@ -99,6 +102,8 @@ PolynomCList& PolynomCList::operator=(const PolynomCList &Pn)
 	if (this == &Pn) { return *this; }
 	Monom *temp = Pn.head->next;
 	head->next = head;
+	last = head;
+	last->next = head;
 	add(temp->Coef, temp->Deg);
 	temp = Pn.head->next->next;
 	while (temp != Pn.head) {
@@ -110,42 +115,30 @@ PolynomCList& PolynomCList::operator=(const PolynomCList &Pn)
 
 PolynomCList PolynomCList::operator+(const PolynomCList &Pn)
 {
-	/*Monom *temp = head;
-	PolynomCList *res = new PolynomCList;
-	while (temp->next != head) {
-		temp = temp->next;
-		res->addSorted(temp->Coef, temp->Deg);
-	}
-	temp = Pn.head;
-	while (temp->next != Pn.head) {
-		temp = temp->next;
-		res->addSorted(temp->Coef, temp->Deg);
-	}
-	return *res;*/
 	Monom *temp1 = head->next;
 	Monom *temp2 = Pn.head->next;
 	PolynomCList *res = new PolynomCList;
 	while (temp1 != head && temp2 != Pn.head) {
 		if (temp1->Deg < temp2->Deg) {
-			res->add(temp1->Coef, temp1->Deg);
+			if (temp1->Coef != 0) res->add(temp1->Coef, temp1->Deg);
 			temp1 = temp1->next;
 		}
 		else if (temp1->Deg == temp2->Deg) {
-			res->add(temp1->Coef + temp2->Coef, temp1->Deg);
+			if (temp1->Coef + temp2->Coef != 0) res->add(temp1->Coef + temp2->Coef, temp1->Deg);
 			temp1 = temp1->next;
 			temp2 = temp2->next;
 		}
 		else {
-			res->add(temp2->Coef, temp2->Deg);
+			if (temp2->Coef != 0) res->add(temp2->Coef, temp2->Deg);
 			temp2 = temp2->next;
 		}
 	}
 	while (temp1 != head) {
-		res->add(temp1->Coef, temp1->Deg);
+		if (temp1->Coef != 0) res->add(temp1->Coef, temp1->Deg);
 		temp1 = temp1->next;
 	}
 	while (temp2 != Pn.head) {
-		res->add(temp2->Coef, temp2->Deg);
+		if (temp2->Coef != 0) res->add(temp2->Coef, temp2->Deg);
 		temp2 = temp2->next;
 	}
 	return *res;
@@ -154,21 +147,21 @@ PolynomCList PolynomCList::operator+(const PolynomCList &Pn)
 PolynomCList PolynomCList::operator-(const PolynomCList &Pn)
 {
 	PolynomCList *res = new PolynomCList;
-	PolynomCList mPn = Pn;
+	/*PolynomCList mPn = Pn;
 	Monom *temp = mPn.head;
 	while (temp->next != mPn.head) {
 		temp = temp->next;
 		temp->Coef *= (-1);
-	}
-	temp = head;
+	}*/
+	Monom *temp = head;
 	while (temp->next != head) {
 		temp = temp->next;
-		res->addSorted(temp->Coef, temp->Deg);
+		if (temp->Coef != 0) res->addSorted(temp->Coef, temp->Deg);
 	}
-	temp = mPn.head;
+	temp = Pn.head;
 	while (temp->next != Pn.head) {
 		temp = temp->next;
-		res->addSorted(temp->Coef, temp->Deg);
+		if (temp->Coef != 0) res->addSorted((-1)*temp->Coef, temp->Deg);
 	}
 	return *res;
 }
@@ -182,41 +175,24 @@ PolynomCList PolynomCList::operator*(const PolynomCList &Pn)
 		temp1 = temp1->next;
 		while (temp2->next != Pn.head) {
 			temp2 = temp2->next;
-			res->addSorted(temp1->Coef * temp2->Coef, temp1->Deg + temp2->Deg);
+			if (temp2->Coef != 0) res->addSorted(temp1->Coef * temp2->Coef, temp1->Deg + temp2->Deg);
 		}
 	}
 	return *res;
 }
 
-/*PolynomCList PolynomCList::operator/(const PolynomCList &Pn)
-{
-	PolynomCList *res = new PolynomCList;
-	Monom *temp1 = head;
-	while (temp1->next != head) {
-		Monom *temp2 = Pn.head;
-		temp1 = temp1->next;
-		while (temp2->next != Pn.head) {
-			temp2 = temp2->next;
-			res->addSorted(temp1->Coef / temp2->Coef, temp1->Deg - temp2->Deg);
-		}
-	}
-	return *res;
-}*/
-
 void PolynomCList::add(int _coef, int _deg)
 {
+	if (_coef != 0) {
 	Monom *T;
 	T = new Monom;
 	T->Coef = _coef;
 	T->Deg = _deg;
 	T->next = head;
-	
-	Monom *temp = head;
-	while (temp->next != head) {
-		temp = temp->next;
-	}
 
-	temp->next = T;
+	last->next = T;
+	last = T;
+	}
 }
 
 void PolynomCList::addSorted(int _coef, int _deg)
@@ -231,8 +207,17 @@ void PolynomCList::addSorted(int _coef, int _deg)
 		temp = temp->next;
 	}
 	if (temp->next->Deg == T->Deg) {
-		temp->next->Coef += T->Coef;
-		delete T;
+		if (temp->next->Coef + T->Coef != 0) {
+			temp->next->Coef += T->Coef;
+			delete T;
+		}
+		else {
+			delete T;
+			Monom *d = new Monom;
+			d = temp->next;
+			temp->next = temp->next->next;
+			delete d;
+		}
 	}
 	else {
 		T->next = temp->next;

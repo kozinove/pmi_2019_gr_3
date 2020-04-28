@@ -5,6 +5,7 @@
 
 class PolynomCList {
 	Monom *head;
+	Monom *last;
 public:
 	PolynomCList();
 
@@ -19,6 +20,5 @@ public:
 	PolynomCList operator+(const PolynomCList &Pn);
 	PolynomCList operator-(const PolynomCList &Pn);
 	PolynomCList operator*(const PolynomCList &Pn);
-	//PolynomCList operator/(const PolynomCList &Pn);
 	
 };
