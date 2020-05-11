@@ -120,6 +120,7 @@
   <ItemGroup>
     <ClInclude Include="Iterator.h" />
     <ClInclude Include="Monom.h" />
+    <ClInclude Include="Polynom.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
