@@ -39,33 +39,30 @@ void CList::showList() {
 
 	}
 }
-void CList::index(Link* res) {
+void CList::index(Link* r) {
 
-	Link* t = res, * t1 = h;
-	while ((t1->next != h) && (t->res <= t1->next->res)) {
-
-
-		t1 = t1->next;
+	Link* t = r, * t1 = h;
+	int g = 0;
+	while (t->res >= t1->next->res) {
+		if (t1->next == h) {
+			
+			t->next = h;
+			t1->next = t;
+			return;
+		}
+		t1 = t1->next; g++;
 	}
-
-	if (t->res == t1->next->res) {
-		t1->next->a += t->a; return;
-
+	if (g == 0) {
+		Link* tmp = h->next;
+		h->next = t;
+		t->next = tmp;
 	}
-
-	if (t->res > t1->res) {
-		t->next = h;
-		t1->next = t;
-		return;
-
+	else {
+		Link* tmp = t1->next;
+		t1 ->next= t;
+		t->next = tmp;
+		
 	}
-
-
-	t->next = t1->next;
-	t1->next = t;
-
-	return;
-
 }
 
 int CList::calculCList(int x, int y, int z) {
@@ -82,11 +79,21 @@ int CList::calculCList(int x, int y, int z) {
 	return res;
 }
 const CList CList::operator+(CList P) {
-	Link* t = h->next;
-	while (t != h) {
-		P.index(t);
-
-		t = t->next;
+	Link* tmp = P.getH()->next;
+	CList Res(h);
+	while (tmp != P.getH()) {
+		Res.addF(tmp->a, tmp->x, tmp->y, tmp->z);
+		tmp = tmp->next;
 	}
-	return P;
+	return Res;
+}
+const CList CList::operator-(CList P) {
+	Link* tmp = P.getH()->next;
+	CList Res(h);
+	while (tmp != P.getH()) {
+		int b = 0 - tmp->a;
+		Res.addF(b, tmp->x, tmp->y, tmp->z);
+		tmp = tmp->next;
+	}
+	return Res;
 }

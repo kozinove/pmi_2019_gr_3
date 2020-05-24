@@ -11,6 +11,6 @@ public:
 	int CalculPol(int x, int y, int z);
 	CList getL();
 	const Polinom operator+(Polinom P);
-
+	const Polinom operator-(Polinom P);
 };
 #endif

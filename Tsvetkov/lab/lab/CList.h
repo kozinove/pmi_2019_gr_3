@@ -30,4 +30,5 @@ public:
 
 	int calculCList(int x, int y, int z);
 	const CList operator+(CList P);
+	const CList operator-(CList P);
 };
