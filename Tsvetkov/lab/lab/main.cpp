@@ -42,7 +42,7 @@ int main() {
 	Polinom P(res);
 	Polinom P1(res1);
 
-	P = P - P1;
+	P = P - P1; //+ , - , *
 	CList List(P.getL());
 	List.showList();
 

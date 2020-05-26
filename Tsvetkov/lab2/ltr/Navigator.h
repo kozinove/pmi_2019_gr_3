@@ -16,4 +16,5 @@ public:
 	bool left();
 	bool right();
 	Node* getCurr();
+	void deleteabz();
 };

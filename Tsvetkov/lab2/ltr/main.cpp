@@ -81,6 +81,7 @@ int main() {
 		printf("5 add rigth\n");
 		printf("6 add left\n");
 		printf("7 delete current tree\n");
+		printf("8 delete abz\n");
 		int op;
 		scanf("%d", &op);
 		if (op == 1) f = n.up();
@@ -108,12 +109,11 @@ int main() {
 		if (op == 7) {
 			n.deleteCurr();
 		}
+		if (op == 8) {
+			n.deleteabz();
+		}
 	}
 	return 0;
 }
 
 
-//реализовать редактор текста с помощью дерева 
-//сдать все дз 
-//спросить все ли обходы реализовывать 
-//редактирование текста ?
